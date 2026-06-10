@@ -1,69 +1,259 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tonite – Rechtliches</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #0B0712;
-            color: #e0e0e0;
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 40px 24px;
-            line-height: 1.7;
-        }
-        header { margin-bottom: 40px; border-bottom: 1px solid #FF2B9422; padding-bottom: 24px; }
-        h1 { font-size: 28px; font-weight: 700; color: white; margin-bottom: 6px; }
-        h1 span { color: #FF2B94; }
-        .meta { font-size: 13px; color: #666; }
-        .tag {
-            display: inline-block;
-            background: #FF2B9412;
-            border: 1px solid #FF2B9433;
-            color: #FF2B94;
-            font-size: 12px;
-            font-weight: 600;
-            padding: 2px 10px;
-            border-radius: 20px;
-            margin-bottom: 16px;
-        }
-        p { font-size: 15px; color: #bbb; margin-bottom: 12px; }
-        a { color: #FF2B94; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        .card {
-            display: block;
-            background: #ffffff08;
-            border: 1px solid #ffffff14;
-            border-radius: 14px;
-            padding: 18px 20px;
-            margin-bottom: 12px;
-        }
-        .card:hover { border-color: #FF2B9455; text-decoration: none; }
-        .card strong { color: white; font-size: 16px; display: block; margin-bottom: 2px; }
-        .card span { color: #888; font-size: 13px; }
-        footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid #ffffff0f; font-size: 13px; color: #555; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tonite – Heute Abend in 30 Sekunden entschieden</title>
+<meta name="description" content="Tonite ist dein Abend-Concierge: Sag uns deinen Vibe, wir sagen dir, was du heute auf deinen Streamern schaust. Ohne Konto, ohne Tracking.">
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+        --pink: #FF2B94;
+        --gold: #F5B841;
+        --bg: #0B0712;
+        --surface: #ffffff08;
+        --line: #ffffff14;
+        --text: #e0e0e0;
+        --muted: #888;
+    }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.7;
+        overflow-x: hidden;
+    }
+    a { color: var(--pink); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .wrap { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+
+    /* Header */
+    .topbar {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 22px 0;
+    }
+    .logo { font-size: 20px; font-weight: 800; color: white; }
+    .logo span { color: var(--pink); }
+
+    /* Hero */
+    .hero {
+        display: flex; align-items: center; gap: 48px;
+        padding: 48px 0 64px; flex-wrap: wrap;
+    }
+    .hero-text { flex: 1 1 380px; }
+    h1 {
+        font-size: clamp(34px, 5.5vw, 54px);
+        font-weight: 800; color: white; line-height: 1.15;
+        letter-spacing: -1px; margin-bottom: 20px;
+    }
+    h1 .accent { color: var(--pink); }
+    .hero-sub {
+        font-size: 17px; color: #bbb; margin-bottom: 28px; max-width: 460px;
+    }
+    .store-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    /* App-Store-Badge: Link nach Launch durch echten App-Store-Link ersetzen!
+       https://apps.apple.com/de/app/idXXXXXXXXX */
+    .store-btn {
+        display: inline-flex; flex-direction: column; justify-content: center;
+        background: white; color: black; border-radius: 12px;
+        padding: 9px 22px; line-height: 1.25;
+    }
+    .store-btn:hover { text-decoration: none; opacity: 0.9; }
+    .store-btn small { font-size: 11px; font-weight: 500; }
+    .store-btn strong { font-size: 17px; font-weight: 700; }
+    .price-hint {
+        font-size: 13px; color: var(--muted); letter-spacing: 0.5px;
+        font-family: ui-monospace, 'SF Mono', monospace;
+    }
+    .price-hint b { color: #6BE49A; font-weight: 700; }
+    .soon-tag {
+        display: inline-block; font-size: 11px; font-weight: 700;
+        color: var(--gold); border: 1px solid #F5B84144; border-radius: 20px;
+        padding: 2px 10px; margin-bottom: 14px; letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    /* Phone-Frame mit echtem Screenshot */
+    .phone {
+        flex: 0 0 auto; width: 300px; margin: 0 auto;
+        border-radius: 44px; overflow: hidden;
+        border: 3px solid #2a2438;
+        box-shadow: 0 30px 80px #FF2B9420, 0 10px 40px #00000088;
+        line-height: 0; background: #060410;
+    }
+    .phone img { width: 100%; height: auto; display: block; }
+    .phone.small {
+        width: 270px;
+        box-shadow: 0 20px 60px #FF2B9418, 0 8px 30px #00000066;
+    }
+
+    /* USP-Chips */
+    .usps {
+        display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;
+        padding: 28px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    }
+    .usp {
+        font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+        font-family: ui-monospace, 'SF Mono', monospace;
+        color: #aaa; border: 1px solid var(--line); border-radius: 20px;
+        padding: 7px 16px;
+    }
+    .usp b { color: var(--pink); margin-right: 4px; font-weight: 700; }
+    .usp.gold b { color: var(--gold); }
+
+    /* Features */
+    .feature {
+        display: flex; align-items: center; gap: 48px;
+        padding: 64px 0; flex-wrap: wrap;
+    }
+    .feature.flip { flex-direction: row-reverse; }
+    .feature-text { flex: 1 1 380px; }
+    .kicker {
+        font-size: 11px; font-weight: 800; letter-spacing: 2.5px;
+        color: var(--pink); text-transform: uppercase; margin-bottom: 10px;
+        font-family: ui-monospace, 'SF Mono', monospace;
+    }
+    .kicker.gold { color: var(--gold); }
+    h2 { font-size: clamp(26px, 3.5vw, 36px); font-weight: 800; color: white; margin-bottom: 14px; letter-spacing: -0.5px; }
+    .feature-text p { font-size: 15px; color: #aaa; max-width: 460px; }
+
+    /* Watch-Together-Card (kein Screenshot — bewusst als Grafik) */
+    .feature-card {
+        flex: 1 1 300px; max-width: 400px; margin: 0 auto;
+        background: var(--surface); border: 1px solid var(--line);
+        border-radius: 20px; padding: 28px 24px;
+    }
+    .fc-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; justify-content: center; }
+    .fc-head .emo { font-size: 22px; }
+    .fc-head .t { font-size: 14px; font-weight: 800; color: white; }
+    .heart-match { text-align: center; padding: 14px 0 6px; font-size: 38px; letter-spacing: 4px; }
+    .match-line { text-align: center; font-size: 13px; color: var(--pink); font-weight: 700; }
+    .match-sub { text-align: center; font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+    /* Legal / Footer */
+    .legal-cards { display: flex; gap: 12px; flex-wrap: wrap; padding: 48px 0 12px; border-top: 1px solid var(--line); }
+    .lcard {
+        flex: 1 1 240px; background: var(--surface); border: 1px solid var(--line);
+        border-radius: 14px; padding: 18px 20px; display: block;
+    }
+    .lcard:hover { border-color: #FF2B9455; text-decoration: none; }
+    .lcard strong { color: white; font-size: 15px; display: block; margin-bottom: 2px; }
+    .lcard span { color: var(--muted); font-size: 12px; }
+    footer {
+        padding: 28px 0 48px; font-size: 13px; color: #555;
+        display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    }
+</style>
 </head>
 <body>
-<header>
-    <div class="tag">Legal</div>
-    <h1>To<span>nite</span></h1>
-    <p class="meta">Heute Abend in 30 Sekunden entschieden.</p>
-</header>
 
-<p>Tonite ist dein Abend-Concierge: Sag uns deinen Vibe, wir sagen dir, was du heute auf deinen Streamern schaust. Hier findest du alle rechtlichen Informationen zur App.</p>
+<div class="wrap">
+    <div class="topbar">
+        <div class="logo">To<span>nite</span></div>
+        <a href="mailto:tonite.support@proton.me" style="font-size:13px; color:#888">Support</a>
+    </div>
 
-<a class="card" href="privacy.html"><strong>Datenschutzerklärung</strong><span>Welche Daten Tonite verarbeitet — und welche nicht</span></a>
-<a class="card" href="agb.html"><strong>AGB &amp; Nutzungsbedingungen</strong><span>Tonite Pro, Abos, Testphase, Kündigung</span></a>
-<a class="card" href="impressum.html"><strong>Impressum</strong><span>Anbieterkennzeichnung</span></a>
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-text">
+            <div class="soon-tag">Bald im App Store</div>
+            <h1>Scrollst du noch,<br>oder schaust du schon?<br><span class="accent">Heute Abend in 30&nbsp;Sekunden entschieden.</span></h1>
+            <p class="hero-sub">Tonite ist dein Abend-Concierge: Sag uns deinen Vibe — wir sagen dir, was du heute auf deinen Streamern schaust. Swipe dich in Sekunden zu deinem Film oder deiner Serie für heute Abend.</p>
+            <div class="store-row">
+                <!-- Nach App-Launch: href durch echten App-Store-Link ersetzen -->
+                <a class="store-btn" href="#"><small>Laden im</small><strong> App Store</strong></a>
+                <span class="price-hint"><b>GRATIS</b> · Pro ab 1,99 €/Monat · 7 Tage testen</span>
+            </div>
+        </div>
+        <div class="phone"><img src="img/heute-swipe.webp" alt="Tonite Heute-Tab: Swipe-Karte mit Filmvorschlag" width="640" height="1391"></div>
+    </section>
 
-<p style="margin-top:24px">Support: <a href="mailto:tonite.support@proton.me">tonite.support@proton.me</a></p>
+    <!-- USPs -->
+    <div class="usps">
+        <span class="usp"><b>×</b> KEIN KONTO</span>
+        <span class="usp"><b>×</b> KEIN TRACKING</span>
+        <span class="usp"><b>×</b> KEINE WERBUNG</span>
+        <span class="usp gold"><b>⌂</b> MADE IN GERMANY</span>
+    </div>
 
-<footer>
-    © 2026 Alexander Waurig · Tonite
-</footer>
+    <!-- FEATURE 1: Vibe -->
+    <section class="feature">
+        <div class="feature-text">
+            <div class="kicker">Dein Geschmack, dein Profil</div>
+            <h2>Sag uns deinen Vibe.</h2>
+            <p>Thriller oder Wohlfühlen? Nur Filme, nur Serien, nur Neues? Du stellst dein Profil einmal ein und passt es jeden Abend mit zwei Taps an deine Stimmung an. Mainstream raus, Geheimtipps rein — du bestimmst, Tonite liefert.</p>
+        </div>
+        <div class="phone small"><img src="img/vibes.webp" alt="Tonite Profil-Vibes: Genre-Auswahl von Romance bis Anime" width="640" height="1391" loading="lazy"></div>
+    </section>
+
+    <!-- FEATURE 2: Shortlist / Abend steht -->
+    <section class="feature flip">
+        <div class="feature-text">
+            <div class="kicker gold">Pick of the Day</div>
+            <h2>Dein Abend steht — bevor er anfängt.</h2>
+            <p>Jeden Abend meldet sich Tonite mit deinem persönlichen Pick, zur Uhrzeit, die du bestimmst. Was du beim Swipen herzt, landet auf deiner Shortlist für heute — antippen, abspielen, Abend gerettet. Auch als Widget auf dem Homescreen.</p>
+        </div>
+        <div class="phone small"><img src="img/shortlist.webp" alt="Tonite Shortlist: deine geherzten Titel für heute Abend" width="640" height="1391" loading="lazy"></div>
+    </section>
+
+    <!-- FEATURE 3: Staffel-Radar -->
+    <section class="feature">
+        <div class="feature-text">
+            <div class="kicker">Staffel-Radar</div>
+            <h2>Nie wieder eine Staffel verpassen.</h2>
+            <p>Glocke an deiner Lieblingsserie aktivieren — Tonite prüft für dich, wann die nächste Staffel kommt, und meldet sich am Release-Tag. Dazu siehst du, was frisch auf deinen Streamern gelandet ist.</p>
+        </div>
+        <div class="phone small"><img src="img/demnaechst.webp" alt="Tonite Demnächst: Staffel-Erinnerungen mit Glocke" width="640" height="1391" loading="lazy"></div>
+    </section>
+
+    <!-- FEATURE 4: Merken -->
+    <section class="feature flip">
+        <div class="feature-text">
+            <div class="kicker gold">Deine Listen</div>
+            <h2>Alles Gemerkte. Sauber sortiert.</h2>
+            <p>Jeder Titel, den du dir merkst, landet in deiner Liste — filterbar nach Streamer, Film oder Serie, Genre. „Was war nochmal dieser Netflix-Film?" ist ab jetzt ein Zwei-Tap-Problem. Und was du gesehen hast, bewertest du mit einem Wisch.</p>
+        </div>
+        <div class="phone small"><img src="img/merken.webp" alt="Tonite Merken-Liste mit Streamer- und Format-Filtern" width="640" height="1391" loading="lazy"></div>
+    </section>
+
+    <!-- FEATURE 5: Watch Together -->
+    <section class="feature">
+        <div class="feature-text">
+            <div class="kicker">Watch Together</div>
+            <h2>Ihr zwei. Ein Match.</h2>
+            <p>Koppel dich mit deiner Partnerin oder deinem Partner. Ihr swipt beide — und sobald ihr denselben Titel herzt, gibt's das Doppelherz. Schluss mit „Was willst DU denn schauen?" im Endlos-Loop.</p>
+        </div>
+        <div class="feature-card">
+            <div class="fc-head"><span class="emo">💞</span><span class="t">Gemeinsamer Abend</span></div>
+            <div class="heart-match">💗&nbsp;+&nbsp;💗</div>
+            <div class="match-line">It's a Match!</div>
+            <div class="match-sub">Ihr wollt beide dasselbe schauen — Tonite sagt euch Bescheid.</div>
+        </div>
+    </section>
+
+    <!-- FEATURE 6: Streamer-Analyse -->
+    <section class="feature flip">
+        <div class="feature-text">
+            <div class="kicker gold">Streamer-Analyse</div>
+            <h2>Welches Abo lohnt sich wirklich?</h2>
+            <p>Netflix, Prime, Disney+, WOW … das summiert sich schnell auf 40 € und mehr im Monat. Tonite rechnet pro Dienst aus, was dich ein geschauter Titel wirklich kostet — und sagt dir ehrlich, welches Abo du guten Gewissens kündigen kannst. Die App, die sich selbst bezahlt.</p>
+        </div>
+        <div class="phone small"><img src="img/analyse.webp" alt="Tonite Streamer-Analyse: welches Abo sich lohnt" width="640" height="1391" loading="lazy"></div>
+    </section>
+
+    <!-- LEGAL -->
+    <div class="legal-cards">
+        <a class="lcard" href="privacy.html"><strong>Datenschutz</strong><span>Welche Daten Tonite verarbeitet — und welche nicht</span></a>
+        <a class="lcard" href="agb.html"><strong>AGB</strong><span>Tonite Pro, Abos, Testphase, Kündigung</span></a>
+        <a class="lcard" href="impressum.html"><strong>Impressum</strong><span>Anbieterkennzeichnung</span></a>
+    </div>
+
+    <footer>
+        <span>© 2026 Alexander Waurig · Tonite</span>
+        <a href="mailto:tonite.support@proton.me">tonite.support@proton.me</a>
+    </footer>
+</div>
+
 </body>
 </html>
